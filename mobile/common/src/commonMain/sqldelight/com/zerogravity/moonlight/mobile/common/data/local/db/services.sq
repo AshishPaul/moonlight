@@ -1,0 +1,19 @@
+CREATE TABLE Services(
+  id TEXT NOT NULL PRIMARY KEY,
+  categoryId TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  price REAL NOT NULL
+);
+
+insertItem:
+INSERT OR REPLACE INTO Services(id, categoryId, title, description, price) VALUES(?,?,?,?,?);
+
+selectAll:
+SELECT * FROM Services;
+
+deleteAll:
+DELETE FROM Services;
+
+deleteByCategoryId:
+DELETE FROM Services WHERE categoryId = :categoryId;
