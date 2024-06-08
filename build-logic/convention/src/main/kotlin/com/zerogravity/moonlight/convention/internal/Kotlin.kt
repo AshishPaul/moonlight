@@ -19,7 +19,7 @@ internal fun Project.configureKapt() {
 /**
  * Configure base Kotlin options
  */
-internal inline fun <reified T : CommonExtension<*, *, *, *, *, *>> Project.configureKotlin() {
+internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configureKotlin() {
     // Use withType to workaround https://youtrack.jetbrains.com/issue/KT-55947
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {

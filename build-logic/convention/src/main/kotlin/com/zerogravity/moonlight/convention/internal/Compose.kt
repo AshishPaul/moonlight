@@ -5,7 +5,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
-internal inline fun <reified T : CommonExtension<*, *, *, *, *, *>> Project.configureCompose() {
+internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configureCompose() {
     extensions.configure<T> {
         buildFeatures {
             compose = true
