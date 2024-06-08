@@ -15,7 +15,7 @@ kmpNativeCoroutines = "1.0.0-ALPHA-24"
 sqlDelight = "2.0.1"
 
 #Android
-agp = "8.2.2"
+androidGradlePlugin = "8.4.1"
 androidxCredentials = "1.2.0"
 datastorePreferences = "1.0.0"
 googleid = "1.1.0"
@@ -131,14 +131,16 @@ mongodb-bson-kotlinx = { group = "org.mongodb", name = "bson-kotlinx", version.r
 koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koin" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
+android-tools-build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [bundles]
 ktor-client-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
 
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
@@ -146,3 +148,14 @@ kmpNativeCoroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+
+moonlight-android-application = { id = "moonlight.android.application", version = "unspecified" }
+moonlight-android-application-compose = { id = "moonlight.android.application.compose", version = "unspecified" }
+moonlight-android-application-navigation = { id = "moonlight.android.application.navigation", version = "unspecified" }
+moonlight-android-application-unitTest = { id = "moonlight.android.application.unitTest", version = "unspecified" }
+moonlight-android-library = { id = "moonlight.android.library", version = "unspecified" }
+moonlight-android-library-compose = { id = "moonlight.android.library.compose", version = "unspecified" }
+moonlight-android-library-navigation = { id = "moonlight.android.library.navigation", version = "unspecified" }
+moonlight-android-library-unitTest = { id = "moonlight.android.library.unitTest", version = "unspecified" }
+moonlight-multiplatform-common = { id = "moonlight.multiplatform.common", version = "unspecified" }
+
