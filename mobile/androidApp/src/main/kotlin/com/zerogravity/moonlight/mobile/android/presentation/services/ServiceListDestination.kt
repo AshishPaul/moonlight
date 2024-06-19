@@ -3,16 +3,13 @@ package com.zerogravity.moonlight.mobile.android.presentation.services
 import android.net.Uri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
-import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.NavigationDestination
+import androidx.navigation.compose.navigation
+import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.TopLevelDestination
 
-object ServiceListDestination : NavigationDestination {
+object ServiceListDestination : TopLevelDestination {
     const val categoryArg = "categoryId"
-    override val route = "category/{$categoryArg}/service"
-    override val destination = "service_list_destination"
+    override val route = "service_list_route"
+    override val graphRoute = "service_list_graph_route"
 
     fun createNavigationRoute(categoryArg: String): String {
         val encodedId = Uri.encode(categoryArg)
@@ -26,18 +23,17 @@ object ServiceListDestination : NavigationDestination {
 }
 
 
-// can test using following (needs to be updated as astronauts change!)
-// adb shell am start -d "peopleinspace://person/Samantha%20Cristoforetti" -a android.intent.action.VIEW
 fun NavGraphBuilder.serviceListGraph(onBackClick: () -> Unit) {
-    composable(
-        route = ServiceListDestination.route,
-        arguments = listOf(
-            navArgument(ServiceListDestination.categoryArg) { type = NavType.StringType }
-        ),
-        deepLinks = listOf(navDeepLink {
-            uriPattern = "moonlight://category/{${ServiceListDestination.categoryArg}}/service"
-        })
+
+    navigation(
+        startDestination = ServiceListDestination.route,
+        route = ServiceListDestination.graphRoute,
+//        deepLinks = listOf(
+//            navDeepLink { uriPattern = HOME_DEEPLINK }
+//        ),
     ) {
-        ServiceListRoute(onBackClick)
+        serviceListRoute(onBackClick = onBackClick)
     }
+
+
 }

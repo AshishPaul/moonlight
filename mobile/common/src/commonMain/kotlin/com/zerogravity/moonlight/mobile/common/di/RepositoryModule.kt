@@ -4,6 +4,8 @@ import com.zerogravity.moonlight.mobile.common.data.repository.AuthenticationRep
 import com.zerogravity.moonlight.mobile.common.data.repository.AuthenticationRepositoryImpl
 import com.zerogravity.moonlight.mobile.common.data.repository.OfflineFirstServiceRepository
 import com.zerogravity.moonlight.mobile.common.data.repository.ServiceRepository
+import com.zerogravity.moonlight.mobile.common.data.repository.UserPreferenceRepository
+import com.zerogravity.moonlight.mobile.common.data.repository.UserPreferenceRepositoryImpl
 import com.zerogravity.moonlight.mobile.common.data.repository.UserRepository
 import com.zerogravity.moonlight.mobile.common.data.repository.UserRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -13,4 +15,5 @@ fun repositoryModule() = module {
     single<ServiceRepository> { OfflineFirstServiceRepository(get(), get(), get(), Dispatchers.IO) }
     single<AuthenticationRepository> { AuthenticationRepositoryImpl(get(), get(), Dispatchers.IO) }
     single<UserRepository> { UserRepositoryImpl(get(), get(), Dispatchers.IO) }
+    single<UserPreferenceRepository> { UserPreferenceRepositoryImpl(get()) }
 }

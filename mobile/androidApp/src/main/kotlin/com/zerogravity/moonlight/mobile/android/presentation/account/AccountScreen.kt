@@ -26,9 +26,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.zerogravity.moonlight.mobile.android.R
-import com.zerogravity.moonlight.mobile.android.presentation.authentication.LoginViewModel
 import com.zerogravity.moonlight.mobile.android.presentation.authentication.GoogleAndroidAuthProvider
+import com.zerogravity.moonlight.mobile.android.presentation.authentication.LoginViewModel
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.LoadingWheel
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.TopAppBar
 import com.zerogravity.moonlight.mobile.common.domain.AppLogger
@@ -40,23 +42,25 @@ import org.koin.java.KoinJavaComponent
 import org.koin.java.KoinJavaComponent.get
 
 
-@Composable
-fun AccountRoute(
-    modifier: Modifier = Modifier,
-    appLogger: AppLogger = KoinJavaComponent.get(AppLogger::class.java),
-    viewModel: LoginViewModel = koinViewModel()
+fun NavGraphBuilder.accountRoute(
 ) {
-    val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
-    val googleAndroidAuthProvider =
-        get<GoogleAndroidAuthProvider>(GoogleAndroidAuthProvider::class.java)
-    val coroutineScope = rememberCoroutineScope()
-    val activity = LocalContext.current as Activity
-    AccountScreen(modifier, uiState, appLogger, onUiEvent = {
-        coroutineScope.launch {
-            googleAndroidAuthProvider.signOut(activity)
-            viewModel.onAuthenticationUiEvent(it)
-        }
-    })
+    composable(route = AccountDestination.route) {
+        val modifier: Modifier = Modifier
+        val appLogger: AppLogger = KoinJavaComponent.get(AppLogger::class.java)
+        val viewModel: LoginViewModel = koinViewModel()
+
+        val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+        val googleAndroidAuthProvider =
+            get<GoogleAndroidAuthProvider>(GoogleAndroidAuthProvider::class.java)
+        val coroutineScope = rememberCoroutineScope()
+        val activity = LocalContext.current as Activity
+        AccountScreen(modifier, uiState, appLogger, onUiEvent = {
+            coroutineScope.launch {
+                googleAndroidAuthProvider.signOut(activity)
+                viewModel.onAuthenticationUiEvent(it)
+            }
+        })
+    }
 
 }
 

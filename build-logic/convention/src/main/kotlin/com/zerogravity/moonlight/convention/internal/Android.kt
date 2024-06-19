@@ -5,7 +5,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
-internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configureAndroid() {
+internal inline fun <reified T : CommonExtension<*, *, *, *, *, *>> Project.configureAndroid() {
     extensions.configure<T> {
         compileSdk = 34
 

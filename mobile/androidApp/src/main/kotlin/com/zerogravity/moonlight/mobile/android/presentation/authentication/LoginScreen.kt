@@ -45,19 +45,41 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.zerogravity.moonlight.mobile.android.R
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.EmailInputField
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.IconWithButton
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.LoadingWheel
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.PasswordInputField
+import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.NavigationDestination
 import com.zerogravity.moonlight.mobile.common.domain.AppLogger
 import com.zerogravity.moonlight.mobile.common.domain.model.AuthProvider
 import com.zerogravity.moonlight.mobile.common.domain.usecase.LoginUiEvent
 import com.zerogravity.moonlight.mobile.common.domain.usecase.LoginUiState
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import org.koin.java.KoinJavaComponent.get
 
 const val LoginTag = "Login"
+
+
+fun NavGraphBuilder.loginRoute(navigateTo: (NavigationDestination, String) -> Unit) {
+    composable(route = LoginDestination.route) {
+        val viewModel: LoginViewModel = koinViewModel()
+        val authenticationUiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+        LoginScreen(
+            loginUiState = authenticationUiState,
+            onAuthenticationUiEvent = {
+                viewModel.onAuthenticationUiEvent(it)
+            },
+            onSignUpClicked = {
+                navigateTo(SignUpDestination, SignUpDestination.route)
+            }
+        )
+    }
+}
 
 @Composable
 fun LoginScreen(

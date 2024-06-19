@@ -18,6 +18,7 @@ import com.zerogravity.moonlight.mobile.android.R
 import com.zerogravity.moonlight.mobile.android.presentation.account.AccountDestination
 import com.zerogravity.moonlight.mobile.android.presentation.homefeed.HomeFeedDestination
 import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.NavigationDestination
+import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.NavigationBarItem
 import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.TopLevelDestination
 
 @Composable
@@ -41,9 +42,9 @@ class AppState(
             .currentBackStackEntryAsState().value?.destination
 
     val shouldShowBottomBar: Boolean
-        @Composable get() = topLevelDestinations.any {
+        @Composable get() = navBarItems.any {
             navController
-                .currentBackStackEntryAsState().value?.destination?.route.equals(it.route)
+                .currentBackStackEntryAsState().value?.destination?.route.equals(it.navigationDestination.route)
         }
 
 
@@ -54,17 +55,15 @@ class AppState(
     /**
      * Top level destinations to be used in the BottomBar and NavRail
      */
-    val topLevelDestinations: List<TopLevelDestination> = listOf(
-        TopLevelDestination(
-            route = HomeFeedDestination.route,
-            destination = HomeFeedDestination.destination,
+    val navBarItems: List<NavigationBarItem> = listOf(
+        NavigationBarItem(
+            navigationDestination = HomeFeedDestination,
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
             iconTextId = R.string.home_feed
         ),
-        TopLevelDestination(
-            route = AccountDestination.route,
-            destination = AccountDestination.destination,
+        NavigationBarItem(
+            navigationDestination = AccountDestination,
             selectedIcon = Icons.Filled.AccountCircle,
             unselectedIcon = Icons.Outlined.AccountCircle,
             iconTextId = R.string.account

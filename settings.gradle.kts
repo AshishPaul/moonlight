@@ -1,6 +1,6 @@
 rootProject.name = "moonlight"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -27,3 +27,5 @@ include(":backend")
 
 project(":shared").projectDir = File(rootDir, "moonlight-backend/shared")
 project(":backend").projectDir = File(rootDir, "moonlight-backend/backend")
+
+gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))

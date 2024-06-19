@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.zerogravity.moonlight.mobile.android.presentation.AppState
 import com.zerogravity.moonlight.mobile.android.presentation.account.accountGraph
 import com.zerogravity.moonlight.mobile.android.presentation.authentication.LoginDestination
 import com.zerogravity.moonlight.mobile.android.presentation.authentication.loginGraph
@@ -15,38 +16,22 @@ import com.zerogravity.moonlight.mobile.android.presentation.services.serviceLis
 
 @Composable
 fun AppNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onNavigateToDestination: (NavigationDestination, String) -> Unit = { _, _ -> },
-    onBackClick: () -> Unit = {},
-    startDestination: String = HomeFeedDestination.route
+    appState: AppState,
+    startRoute: String = HomeFeedDestination.graphRoute
 ) {
     NavHost(
-        navController = navController,
-        startDestination = startDestination,
-        modifier = modifier,
+        navController = appState.navController,
+        startDestination = startRoute,
     ) {
+        navigationBarHost(
+            appState = appState,
+            onNavigateToDestination = appState::navigate,
+            onBackClick = appState::onBackClick
+        )
         signUpGraph {
-            navController.navigate(LoginDestination.route) {
-                popUpTo(LoginDestination.route) {
-                    inclusive = true
-                }
-                launchSingleTop = true
-            }
+            appState.navigate(LoginDestination, LoginDestination.route)
         }
 
-        loginGraph { navDestination, route ->
-            onNavigateToDestination(navDestination,route)
-        }
-
-        homeFeedGraph(navigateTo = {
-            onNavigateToDestination(
-                ServiceListDestination,
-                ServiceListDestination.createNavigationRoute(it)
-            )
-        })
-        serviceListGraph(onBackClick = onBackClick)
-
-        accountGraph { }
+        loginGraph(appState::navigate)
     }
 }

@@ -1,29 +1,24 @@
 package com.zerogravity.moonlight.mobile.android.presentation.authentication
 
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.NavigationDestination
-import org.koin.androidx.compose.koinViewModel
+import com.zerogravity.moonlight.mobile.android.presentation.ui.navigation.TopLevelDestination
 
-object LoginDestination : NavigationDestination {
+object LoginDestination : TopLevelDestination {
     override val route = "login_route"
-    override val destination = "login_destination"
+    override val graphRoute = "login_graph_route"
 }
 
 fun NavGraphBuilder.loginGraph(navigateTo: (NavigationDestination, String) -> Unit) {
-    composable(route = LoginDestination.route) {
-        val viewModel: LoginViewModel = koinViewModel()
-        val authenticationUiState by viewModel.loginUiState.collectAsStateWithLifecycle()
-        LoginScreen(
-            loginUiState = authenticationUiState,
-            onAuthenticationUiEvent = {
-                viewModel.onAuthenticationUiEvent(it)
-            },
-            onSignUpClicked = {
-                navigateTo(SignUpDestination, SignUpDestination.route)
-            }
-        )
+    navigation(
+        startDestination = LoginDestination.route,
+        route = LoginDestination.graphRoute,
+//        deepLinks = listOf(
+//            navDeepLink { uriPattern = LOGIN_DEEPLINK }
+//        )
+    ) {
+        loginRoute(navigateTo)
     }
+
 }

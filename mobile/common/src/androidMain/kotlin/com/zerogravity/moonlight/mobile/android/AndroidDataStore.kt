@@ -19,7 +19,7 @@ class AndroidDataStore(
     private val ioDispatcher: CoroutineDispatcher
 ) : UserDataStore {
 
-    private val tokensKey = stringPreferencesKey("user_data_store")
+    private val tokensKey = stringPreferencesKey("auth_token")
 
     override suspend fun saveToken(tokens: Tokens) {
         withContext(ioDispatcher) {

@@ -51,6 +51,8 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.zerogravity.moonlight.mobile.android.R
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.TopAppBar
 import com.zerogravity.moonlight.mobile.common.domain.AppLogger
@@ -64,21 +66,22 @@ import org.koin.java.KoinJavaComponent.get
 
 const val HomeFeedTag = "HomeFeed"
 
-@Composable
-fun HomeFeedRoute(
+internal fun NavGraphBuilder.homeFeedRoute(
     modifier: Modifier = Modifier,
-    viewModel: HomeFeedViewModel = koinViewModel(),
-    navigateTo: (String) -> Unit
+
+    onCategoryClick: (String) -> Unit
 ) {
-    val appLogger: AppLogger = get(AppLogger::class.java)
-    appLogger.d("HomeFeedRoute: Start HomeFeedRoute")
-    val uiState by viewModel.homeFeedUiState.collectAsStateWithLifecycle()
-    appLogger.d("HomeFeedRoute: uiState : $uiState")
+    composable(route = HomeFeedDestination.route) {
+        val viewModel: HomeFeedViewModel = koinViewModel()
+        val appLogger: AppLogger = get(AppLogger::class.java)
+        appLogger.d("HomeFeedRoute: Start HomeFeedRoute")
+        val uiState by viewModel.homeFeedUiState.collectAsStateWithLifecycle()
+        appLogger.d("HomeFeedRoute: uiState : $uiState")
 
-    HomeFeedScreen(uiState, modifier, navigateTo = navigateTo, onUiEvent = {
-        viewModel.onHomeFeedUiEvent(it)
-    })
-
+        HomeFeedScreen(uiState, modifier, onCategoryClick = onCategoryClick, onUiEvent = {
+            viewModel.onHomeFeedUiEvent(it)
+        })
+    }
 }
 
 @ExperimentalMaterialApi
@@ -87,7 +90,7 @@ fun HomeFeedScreen(
     homeUiState: HomeFeedUiState,
     modifier: Modifier = Modifier,
     appLogger: AppLogger = get(AppLogger::class.java),
-    navigateTo: (String) -> Unit,
+    onCategoryClick: (String) -> Unit,
     onUiEvent: (HomeFeedUiEvent) -> Unit
 ) {
     appLogger.d("HomeFeedScreen: Entry to HomeFeedScreen")
@@ -148,7 +151,7 @@ fun HomeFeedScreen(
 
                     is CategoriesUiState.Populated -> {
                         CategoryList(innerPadding, categoryState.categories) {
-                            navigateTo(it)
+                            onCategoryClick(it)
                         }
                     }
                 }

@@ -8,8 +8,10 @@ import co.touchlab.kermit.LogWriter
 import co.touchlab.kermit.LogcatWriter
 import com.zerogravity.moonlight.mobile.android.AndroidDataStore
 import com.zerogravity.moonlight.mobile.android.AndroidDatabaseDriverFactory
+import com.zerogravity.moonlight.mobile.android.AndroidUserPreferenceDataStore
 import com.zerogravity.moonlight.mobile.common.data.local.DatabaseDriverFactory
 import com.zerogravity.moonlight.mobile.common.data.local.datastore.UserDataStore
+import com.zerogravity.moonlight.mobile.common.data.local.datastore.UserPreferenceDataStore
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 import kotlinx.coroutines.Dispatchers
@@ -33,27 +35,15 @@ actual fun platformModule() = module {
 
     single<LogWriter> { LogcatWriter() }
 
-//    single<SharedPreferences> {
-//        val masterKey: MasterKey = MasterKey.Builder(get())
-//            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-//            .build()
-//
-//        EncryptedSharedPreferences.create(
-//            get(),
-//            "user_shared_prefs",
-//            masterKey,
-//            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-//            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-//        )
-//    }
-
-    single<DataStore<Preferences>> {
+    single<UserDataStore> {
         val context: Context = get()
-        context.dataStore
+        AndroidDataStore(context.dataStore, Dispatchers.IO)
     }
 
-    single<UserDataStore> {
-        AndroidDataStore(get(), Dispatchers.IO)
+    single<UserPreferenceDataStore> {
+        val context: Context = get()
+        AndroidUserPreferenceDataStore(context.userPreferenceStore, Dispatchers.IO)
     }
 }
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_data_store¬")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_data_store")
+val Context.userPreferenceStore: DataStore<Preferences> by preferencesDataStore(name = "user_preference_store")

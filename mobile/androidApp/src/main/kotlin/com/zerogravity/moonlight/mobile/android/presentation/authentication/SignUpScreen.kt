@@ -41,6 +41,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.zerogravity.moonlight.mobile.android.R
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.InputField
 import com.zerogravity.moonlight.mobile.android.presentation.ui.components.LoadingWheel
@@ -49,9 +52,27 @@ import com.zerogravity.moonlight.mobile.common.domain.AppLogger
 import com.zerogravity.moonlight.mobile.common.domain.usecase.SignUpUiEvent
 import com.zerogravity.moonlight.mobile.common.domain.usecase.SignUpUiState
 import com.zerogravity.moonlight.shared.domain.model.request.UserRequest
+import org.koin.androidx.compose.koinViewModel
 import org.koin.java.KoinJavaComponent.get
 
 const val SignUpTag = "SignUp"
+
+fun NavGraphBuilder.signUpRoute(onSignUpSuccess: () -> Unit) {
+    composable(route = SignUpDestination.route) {
+        val viewModel: SignUpViewModel = koinViewModel()
+        val signUpUiState by viewModel.signUpUiState.collectAsStateWithLifecycle()
+
+        if (signUpUiState.success) {
+            onSignUpSuccess()
+        } else {
+            SignUpScreen(
+                signUpUiState = signUpUiState,
+            ) {
+                viewModel.onSignUpUiEvent(it)
+            }
+        }
+    }
+}
 
 @Composable
 fun SignUpScreen(
