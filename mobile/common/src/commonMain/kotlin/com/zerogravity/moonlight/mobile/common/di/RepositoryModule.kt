@@ -14,6 +14,6 @@ import org.koin.dsl.module
 fun repositoryModule() = module {
     single<ServiceRepository> { OfflineFirstServiceRepository(get(), get(), get(), Dispatchers.IO) }
     single<AuthenticationRepository> { AuthenticationRepositoryImpl(get(), get(), Dispatchers.IO) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(), Dispatchers.IO) }
+    single<UserRepository> { UserRepositoryImpl(get(), Dispatchers.IO) }
     single<UserPreferenceRepository> { UserPreferenceRepositoryImpl(get()) }
 }

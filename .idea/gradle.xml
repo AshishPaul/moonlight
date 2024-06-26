@@ -25,6 +25,14 @@
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/mobile" />
             <option value="$PROJECT_DIR$/mobile/androidApp" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/app" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/core" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/core/ui" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/features" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/features/account" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/features/authentication" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/features/category" />
+            <option value="$PROJECT_DIR$/mobile/androidApp/features/home" />
             <option value="$PROJECT_DIR$/mobile/common" />
             <option value="$PROJECT_DIR$/moonlight-backend/backend" />
             <option value="$PROJECT_DIR$/moonlight-backend/shared" />

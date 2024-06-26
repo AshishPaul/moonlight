@@ -27,7 +27,4 @@ actual fun platformModule() = module {
 
     single<UserDataStore> { NativeDataStore() }
 
-    single<UserPreferenceDataStore> { NativeUserPreferenceDataStore() }
-
-
 }

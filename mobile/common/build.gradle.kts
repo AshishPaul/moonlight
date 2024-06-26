@@ -3,7 +3,8 @@ plugins {
 }
 
 android {
-    namespace = "com.zerogravity.moonlight.mobile.common"
+    namespace = "com.zerogravity.moonlight.mobile.common.android"
+
 }
 
 sqldelight {

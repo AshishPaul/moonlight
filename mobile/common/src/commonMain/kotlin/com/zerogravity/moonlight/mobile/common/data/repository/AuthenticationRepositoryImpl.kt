@@ -17,7 +17,9 @@ class AuthenticationRepositoryImpl(
 ) : AuthenticationRepository {
 
     override fun isAuthenticated(): Flow<Boolean> =
-        userRepository.getUser().map { it != null }
+        userRepository.getUser().map {
+            it != null
+        }
 
     override suspend fun signUp(userRequest: UserRequest) = withContext(ioDispatcher) {
         authenticationApi.signUp(userRequest)
