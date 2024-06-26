@@ -19,5 +19,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         configureKotlin<LibraryExtension>()
         configureKapt()
         configureKoinCore()
+        configureKoinAndroid()
     }
 }

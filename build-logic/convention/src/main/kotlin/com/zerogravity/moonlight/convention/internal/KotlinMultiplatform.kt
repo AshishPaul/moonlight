@@ -34,6 +34,12 @@ internal fun Project.configureKotlinMultiplatform(
             implementation(getLibrary("sqldelight.android.driver"))
             implementation(getLibrary("logging.interceptor"))
             implementation(getLibrary("androidx.datastore.preferences"))
+
+            implementation(getLibrary("androidx.credentials"))
+            // optional - needed for credentials support from play services, for devices running
+            // Android 13 and below.
+            implementation(getLibrary("androidx.credentials.play.services.auth"))
+            implementation(getLibrary("googleid"))
         }
 //        iosMain.dependencies {
 //            implementation(getLibrary("ktor.client.darwin"))

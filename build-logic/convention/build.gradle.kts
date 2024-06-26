@@ -55,7 +55,7 @@ gradlePlugin {
 
         register("androidLibrary") {
             id = "moonlight.android.library"
-            implementationClass = "AndroidApplicationConventionPlugin"
+            implementationClass = "AndroidLibraryConventionPlugin"
         }
 
         register("androidLibraryCompose") {

@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.zerogravity.moonlight.mobile.common.data.local.datastore.UserDataStore
+import com.zerogravity.moonlight.mobile.common.domain.JwtTokenDecoder
 import com.zerogravity.moonlight.shared.domain.model.response.Tokens
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -16,8 +17,9 @@ import kotlinx.serialization.json.Json
 
 class AndroidDataStore(
     private val dataStore: DataStore<Preferences>,
+    jwtTokenDecoder: JwtTokenDecoder,
     private val ioDispatcher: CoroutineDispatcher
-) : UserDataStore {
+) : UserDataStore(jwtTokenDecoder) {
 
     private val tokensKey = stringPreferencesKey("user_data_store")
 
